@@ -1,13 +1,40 @@
 from pytube import YouTube
 
-def select_video(url):
-    return YouTube(url)
+def download(youtube_obj, stream_num):
+    """
+    Download Video
+    ---------
+    Downloads a YouTube Video with the inputs of the URL and the Stream Number (Itag)
+    
+    :param url: The URL of the Video
+    :param stream_num: the itag of the video
+    """
 
-def download(yt_obj, audio_only):
-    if audio_only:
-        yt_obj.streams.get_by_itag(140).download()
-    else:
-        yt_obj.streams.get_by_itag(137).download()
+    youtube_obj.streams.get_by_itag(stream_num).download()
 
-download(select_video('https://youtu.be/bg-quTTOeH4'), False)
 
+def interface():
+    """
+    User Interface
+    ---------------
+    Command line Interface > allows user to enter values for [url] and [itag] for use in download()
+
+    Keyword arguments: none
+    Return: none
+    """
+    print("Python YouTube Downloader")
+    url = input("URL: ")
+    
+    yt = YouTube(url)
+    
+    print("Loading...")
+    for i in list(yt.streams):
+        print(i)
+
+    itag = input("Itag: ")
+
+    print('Downloading...')
+    download(yt, itag)
+    print('Download Complete')
+
+interface()
