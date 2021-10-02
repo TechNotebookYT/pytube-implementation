@@ -10,7 +10,7 @@ def download(youtube_obj, stream_num):
     :param stream_num: the itag of the video
     """
 
-    youtube_obj.streams.get_by_itag(stream_num).download()
+    youtube_obj.streams.get_by_itag(stream_num).download() # Downloads the selected stream
 
 
 def interface():
@@ -25,16 +25,17 @@ def interface():
     print("Python YouTube Downloader")
     url = input("URL: ")
     
-    yt = YouTube(url)
+    yt = YouTube(url) # Selects a video
     
     print("Loading...")
+    # Printing all posible streams
     for i in list(yt.streams):
         print(i)
 
-    itag = input("Itag: ")
+    itag = input("Itag: ") # Selecting a stream to download
 
     print('Downloading...')
-    download(yt, itag)
+    download(yt, itag) # Downloads stream (see downloads())
     print('Download Complete')
 
 interface()
