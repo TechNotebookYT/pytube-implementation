@@ -1,6 +1,6 @@
 from pytube import YouTube
 
-def download(youtube_obj, stream_num):
+def download(yt_obj, stream_num):
     """
     Download Video
     ---------
@@ -10,7 +10,7 @@ def download(youtube_obj, stream_num):
     :param stream_num: the itag of the video
     """
 
-    youtube_obj.streams.get_by_itag(stream_num).download() # Downloads the selected stream
+    yt_obj.streams.get_by_itag(stream_num).download() # Downloads the selected stream
 
 
 def interface():
