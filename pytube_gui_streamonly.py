@@ -1,3 +1,7 @@
+# Only Downloads Specified Stream - Due to YouTube's new DASH Streaming Protocol,
+# the Audio and Video on HD videos need to be downloaded separately
+
+
 import tkinter as tk
 from pytube import YouTube
 
