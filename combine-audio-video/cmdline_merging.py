@@ -19,3 +19,17 @@ def copy(video_path, audio_path, name, final_path):
         .output(audio, video, f'{name}.mp4', acodec='copy', vcodec='copy')
         .run()
     )
+
+
+def interface():
+    print("Welcome to the Pytube Downloader!")
+    url = input("URL: ")
+
+    yt = YouTube(url)
+
+    yt.streams.get_highest_resolution.download(
+        output_path='/media/pranav/240GB SSD/Youtube Project/Pytube/code/src/downloads')
+    yt.streams.get_by_itag(139).download(
+        output_path='/media/pranav/240GB SSD/Youtube Project/Pytube/code/src/downloads')
+
+interface()
