@@ -1,5 +1,6 @@
 from pytube import YouTube
-
+import os
+import shutil
 
 def copy(video_path, audio_path, name, final_path):
     """
@@ -16,7 +17,7 @@ def copy(video_path, audio_path, name, final_path):
     audio = ffmpeg.input(video_path)
     (
         ffmpeg
-        .output(audio, video, f'{name}.mp4', acodec='copy', vcodec='copy')
+        .output(audio, video, f'{final_path}/{name}.mp4', acodec='copy', vcodec='copy')
         .run()
     )
 
@@ -27,7 +28,6 @@ def interface():
 
     yt = YouTube(url)
 
-    import os
     CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 
     path = os.path.join(CURR_DIR, 'downloads')
@@ -38,11 +38,15 @@ def interface():
     title = []
     for char in yt.title:
         if char == "|":
-            title.append(" ")
+            title.append("")
         else:
             title.append(char)
-    title = str(title)
+    title = "".join(title)
+    print("Downloading... ", title)
+    copy(f'{path}/video/{title}.mp4',
+         f'{path}/audio/{title}.mp4', f'{title}', f'{path}')
 
-    copy(f'{path}/video/Downloading Videos with Python - Getting Started with PyTube  Part 1.mp4',
-         f'{path}/audio/Downloading Videos with Python - Getting Started with PyTube  Part 1.mp4', 'Final', f'{path}/final')
+    shutil.rmtree(os.path.join(path, 'audio'))
+    shutil.rmtree(os.path.join(path, 'video'))
+
 interface()
