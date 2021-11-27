@@ -5,7 +5,7 @@ import shutil
 import ffmpeg
 
 
-def merge(video_path, audio_path, name, final_path):
+def merge(video_path, audio_path, file, final_path):
     """
     FFMPEG-Merge
     ------
@@ -20,7 +20,7 @@ def merge(video_path, audio_path, name, final_path):
 
     # Runs the FFMPEG module to join the audio and video
     ffmpeg.output(
-        video, audio, f'{final_path}/{name}.mp4', acodec='copy', vcodec='copy').run()
+        video, audio, f'{final_path}/{file}', acodec='copy', vcodec='copy').run()
 
 
 def interface():
@@ -38,16 +38,16 @@ def interface():
     path = os.path.join(CURR_DIR, 'downloads')
 
     # Video Stream
-    yt.streams.get_highest_resolution().download(output_path=f'{path}/video')
+    yt.streams.get_highest_resolution().download(os.path.join(path, 'video'))
     # Audio Stream
-    yt.streams.get_by_itag(139).download(output_path=f'{path}/audio')
+    yt.streams.get_by_itag(139).download(os.path.join(path, 'audio'))
 
     # Gets the name of the downloaded files using the file in the video directory
-    video_filename = os.listdir(f'{path}/video')[0]
+    video_filename = os.listdir(os.path.join(path, 'video'))[0]
 
     # Calls the merge function
-    merge(f'{path}/video/{video_filename}',
-          f'{path}/audio/{video_filename}', video_filename[:-4], path)
+    merge(f'{os.path.join(path, "video")}/{video_filename}',
+          f'{os.path.join(path, "audio")}/{video_filename}', video_filename, path)
 
     # Deletes the video and audio directories
     shutil.rmtree(os.path.join(path, 'audio'))
